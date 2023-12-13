@@ -1,6 +1,9 @@
 import React from 'react';
 import {Box, Newline, Text, useApp, useInput} from 'ink';
 import {HEIGHT, WIDTH} from './constants.js';
+import Quote from './Quote.js';
+import BlinkingInput from './Input.js';
+// import BlinkingInput from './Input.js';
 
 export default function App() {
 	const {exit} = useApp();
@@ -30,13 +33,17 @@ export default function App() {
 						borderColor="green"
 						height={'60%'}
 						width={'100%'}
-					></Box>
+					>
+						{/* <Quote /> */}
+					</Box>
 					<Box
 						borderStyle="round"
 						borderColor="green"
 						height={'40%'}
 						width={'100%'}
-					></Box>
+					>
+						<BlinkingInput />
+					</Box>
 				</Box>
 				<Box
 					borderStyle="round"
