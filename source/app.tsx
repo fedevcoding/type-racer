@@ -1,17 +1,22 @@
-import React from 'react';
-import {Box, Newline, Text, useApp, useInput} from 'ink';
-import {HEIGHT, WIDTH} from './constants.js';
+import React, {useState} from 'react';
+import {Box, Newline, Text} from 'ink';
+import {HEIGHT, RANDOM_QUOTES_API, WIDTH} from './constants.js';
 import Quote from './Quote.js';
 import BlinkingInput from './Input.js';
-// import BlinkingInput from './Input.js';
+
+import {useQuery} from '@tanstack/react-query';
+
+const fetchQuote = async (): Promise<string> => {
+	const quote = (await (await fetch(RANDOM_QUOTES_API)).json())?.[0]?.content;
+	return quote;
+};
 
 export default function App() {
-	const {exit} = useApp();
+	const [inputValue, setInputValue] = useState('');
 
-	useInput((input, key) => {
-		if (input === 'q' || key.escape) {
-			exit();
-		}
+	const {isPending, data: quote} = useQuery({
+		queryKey: ['data'],
+		queryFn: fetchQuote,
 	});
 
 	return (
@@ -34,7 +39,7 @@ export default function App() {
 						height={'60%'}
 						width={'100%'}
 					>
-						{/* <Quote /> */}
+						<Quote isPending={isPending} quote={quote} typedData={inputValue} />
 					</Box>
 					<Box
 						borderStyle="round"
@@ -42,7 +47,7 @@ export default function App() {
 						height={'40%'}
 						width={'100%'}
 					>
-						<BlinkingInput />
+						<BlinkingInput onType={setInputValue} />
 					</Box>
 				</Box>
 				<Box

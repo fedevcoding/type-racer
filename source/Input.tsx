@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Text, useApp, useInput} from 'ink';
+import {Text, useInput} from 'ink';
 
-export default function BlinkingInput() {
+type Params = {
+	onType: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export default function BlinkingInput({onType}: Params) {
 	const [inputValue, setInputValue] = useState('');
 	const [cursorVisible, setCursorVisible] = useState(true);
-	const {exit} = useApp();
 	const [isTyping, setIsTyping] = useState(false);
 
 	// Effect to toggle cursor visibility every 500 milliseconds
@@ -22,22 +25,19 @@ export default function BlinkingInput() {
 	useInput((input, key) => {
 		setIsTyping(true);
 
-		if (key.return) {
-			// Trigger the onSubmit callback with the current input value
-			// onSubmit(inputValue);
-			// Clear the input value
-			setInputValue('');
-		} else if (key.escape) {
-			// Exit the application on ESC key
-			exit();
-		} else if (key.backspace || key.delete) {
-			// Handle both backspace and delete keys
+		// if (key.return) {
+		// 	setInputValue('');
+		// }
+		if (key.delete) {
 			setInputValue(prev => prev.slice(0, -1));
 		} else if (!key.ctrl && !key.meta) {
-			// Append regular characters to the input value
 			setInputValue(prev => prev + input);
 		}
 	});
+
+	useEffect(() => {
+		onType(inputValue);
+	}, [inputValue]);
 
 	// Delay setting isTyping to false after 500 milliseconds
 	useEffect(() => {

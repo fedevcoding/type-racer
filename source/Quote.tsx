@@ -1,18 +1,24 @@
 import React from 'react';
 import {Text} from 'ink';
-import {RANDOM_QUOTES_API} from './constants.js';
-import {useQuery} from '@tanstack/react-query';
 
-const fetchQuote = async (): Promise<string> => {
-	const quote = (await (await fetch(RANDOM_QUOTES_API)).json())?.[0]?.content;
-	return quote;
+type Params = {
+	isPending: boolean;
+	quote: string | undefined;
+	typedData: string;
 };
 
-export default function Quote() {
-	const {isPending, data} = useQuery({
-		queryKey: ['data'],
-		queryFn: fetchQuote,
-	});
-
-	return <Text>{isPending ? 'Loading quote...' : data}</Text>;
+export default function Quote({isPending, quote, typedData}: Params) {
+	return (
+		<Text>
+			{isPending
+				? 'Loading quote...'
+				: Array.from(quote!).map((val, index) => {
+						if (typedData[index] === val) {
+							return <Text color="green">{val}</Text>;
+						} else {
+							return <Text color="red">{val}</Text>;
+						}
+				  })}
+		</Text>
+	);
 }
