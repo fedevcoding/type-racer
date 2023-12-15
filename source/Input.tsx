@@ -3,9 +3,10 @@ import {Text, useInput} from 'ink';
 
 type Params = {
 	onType: React.Dispatch<React.SetStateAction<string>>;
+	value: string;
 };
 
-export default function BlinkingInput({onType}: Params) {
+export default function BlinkingInput({onType, value}: Params) {
 	const [inputValue, setInputValue] = useState('');
 	const [cursorVisible, setCursorVisible] = useState(true);
 	const [isTyping, setIsTyping] = useState(false);
@@ -25,10 +26,7 @@ export default function BlinkingInput({onType}: Params) {
 	useInput((input, key) => {
 		setIsTyping(true);
 
-		// if (key.return) {
-		// 	setInputValue('');
-		// }
-		if (key.delete) {
+		if (key.delete || key.backspace) {
 			setInputValue(prev => prev.slice(0, -1));
 		} else if (!key.ctrl && !key.meta) {
 			setInputValue(prev => prev + input);
@@ -38,6 +36,10 @@ export default function BlinkingInput({onType}: Params) {
 	useEffect(() => {
 		onType(inputValue);
 	}, [inputValue]);
+
+	useEffect(() => {
+		if(value === "") setInputValue('');
+	}, [value]);
 
 	// Delay setting isTyping to false after 500 milliseconds
 	useEffect(() => {
@@ -53,7 +55,7 @@ export default function BlinkingInput({onType}: Params) {
 	return (
 		<Text>
 			{'> '}
-			{inputValue}
+			{value}
 			{cursorVisible || isTyping ? '|' : ' '}
 		</Text>
 	);

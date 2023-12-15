@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Newline, Text} from 'ink';
 import {HEIGHT, RANDOM_QUOTES_API, WIDTH} from './constants.js';
 import Quote from './Quote.js';
 import BlinkingInput from './Input.js';
-
+import {STATS} from './types.js';
 import {useQuery} from '@tanstack/react-query';
 
 const fetchQuote = async (): Promise<string> => {
@@ -12,12 +12,37 @@ const fetchQuote = async (): Promise<string> => {
 };
 
 export default function App() {
+	const [stats, setStats] = useState<STATS>({
+		WPM: 0,
+		ACC: 0,
+		COR: 0,
+		ERR: 0,
+	});
 	const [inputValue, setInputValue] = useState('');
 
 	const {isPending, data: quote} = useQuery({
 		queryKey: ['data'],
 		queryFn: fetchQuote,
 	});
+	const [quoteCopy, setQuoteCopy] = useState<string>("");
+
+
+	useEffect(() => {
+		if (quote) {
+			setQuoteCopy(quote);
+		}
+	}, [quote]);
+
+
+	useEffect(() => {
+		const splittedQuote = quoteCopy?.split(' ');
+		// check if the user has typed the first word of the quote
+		if(inputValue === splittedQuote[0] + ' ' || (inputValue === splittedQuote[0] && splittedQuote.length === 1)) {
+			setQuoteCopy((prev) => prev.slice(inputValue.length));
+			setInputValue('');
+		}
+	}, [inputValue]);
+
 
 	return (
 		<>
@@ -39,7 +64,7 @@ export default function App() {
 						height={'60%'}
 						width={'100%'}
 					>
-						<Quote isPending={isPending} quote={quote} typedData={inputValue} />
+						<Quote isPending={isPending} quote={quoteCopy} typedData={inputValue} />
 					</Box>
 					<Box
 						borderStyle="round"
@@ -47,7 +72,7 @@ export default function App() {
 						height={'40%'}
 						width={'100%'}
 					>
-						<BlinkingInput onType={setInputValue} />
+						<BlinkingInput onType={setInputValue} value={inputValue}  />
 					</Box>
 				</Box>
 				<Box
@@ -61,16 +86,16 @@ export default function App() {
 						<Newline />
 						<Newline />
 						<Newline />
-						<Text>WPM:</Text>
+						<Text>WPM: {stats.WPM}</Text>
 						<Newline />
 						<Newline />
-						<Text>Errors:</Text>
+						<Text>Errors: {stats.ERR}</Text>
 						<Newline />
 						<Newline />
-						<Text>Accuracy:</Text>
+						<Text>Accuracy: {stats.ACC}</Text>
 						<Newline />
 						<Newline />
-						<Text>Combo:</Text>
+						<Text>Combo: {stats.COR}</Text>
 					</Text>
 				</Box>
 			</Box>
