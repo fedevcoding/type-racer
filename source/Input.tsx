@@ -38,7 +38,7 @@ export default function BlinkingInput({onType, value}: Params) {
 	}, [inputValue]);
 
 	useEffect(() => {
-		if(value === "") setInputValue('');
+		if (value === '') setInputValue('');
 	}, [value]);
 
 	// Delay setting isTyping to false after 500 milliseconds
