@@ -13,8 +13,6 @@ export default function App() {
 		ERR: 0,
 	});
 
-	// const [gameId, setGameId] = useState<string>(randomId());
-	// const [gameOver, setGameOver] = useState<boolean>(false);
 	const [game, setGame] = useState({
 		gameId: randomId(),
 		gameOver: false,
@@ -22,6 +20,13 @@ export default function App() {
 
 	useInput((_, key) => {
 		if (key.return && game.gameOver) {
+			setStats({
+				WPM: 0,
+				ACC: 0,
+				COR: 0,
+				ERR: 0,
+			});
+
 			setGame({
 				gameId: randomId(),
 				gameOver: false,

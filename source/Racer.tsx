@@ -22,7 +22,7 @@ type Params = {
 	};
 };
 
-export default function Racer({stats, setGame, game}: Params) {
+export default function Racer({stats, setGame, game, setStats}: Params) {
 	const [inputValue, setInputValue] = useState('');
 
 	const {isPending, data: quote} = useQuery({
@@ -30,6 +30,7 @@ export default function Racer({stats, setGame, game}: Params) {
 		queryFn: fetchQuote,
 	});
 	const [quoteCopy, setQuoteCopy] = useState<string>('');
+	const [startTime, setStartTime] = useState<number>(0);
 
 	useEffect(() => {
 		if (quote) {
@@ -38,6 +39,20 @@ export default function Racer({stats, setGame, game}: Params) {
 	}, [quote]);
 
 	useEffect(() => {
+		if (!startTime) {
+			setStartTime(Date.now());
+		} else {
+			const timeElapsed = Date.now() - startTime;
+			const timeElapsedInMinutes = timeElapsed / 1000 / 60;
+			const typedWords = quote?.length!! - quoteCopy.length;
+			const WPM = Math.floor(typedWords / 5 / timeElapsedInMinutes);
+
+			setStats(prev => ({
+				...prev,
+				WPM,
+			}));
+		}
+
 		const splittedQuote = quoteCopy?.split(' ');
 		// check if the user has typed the first word of the quote
 		if (
