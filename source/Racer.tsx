@@ -123,14 +123,6 @@ export default function Racer({stats, setGame, game, setStats}: Params) {
 						<Newline />
 						<Text>WPM: {stats.WPM}</Text>
 						<Newline />
-						<Newline />
-						<Text>Errors: {stats.ERR}</Text>
-						<Newline />
-						<Newline />
-						<Text>Accuracy: {stats.ACC}</Text>
-						<Newline />
-						<Newline />
-						<Text>Combo: {stats.COR}</Text>
 					</Text>
 				</Box>
 			</Box>

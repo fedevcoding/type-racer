@@ -8,9 +8,6 @@ import {HEIGHT, WIDTH} from './constants.js';
 export default function App() {
 	const [stats, setStats] = useState<STATS>({
 		WPM: 0,
-		ACC: 0,
-		COR: 0,
-		ERR: 0,
 	});
 
 	const [game, setGame] = useState({
@@ -22,9 +19,6 @@ export default function App() {
 		if (key.return && game.gameOver) {
 			setStats({
 				WPM: 0,
-				ACC: 0,
-				COR: 0,
-				ERR: 0,
 			});
 
 			setGame({
