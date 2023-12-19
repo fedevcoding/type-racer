@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {STATS} from './types.js';
 import Racer from './Racer.js';
 import {Box, Newline, Text, useInput} from 'ink';
@@ -31,10 +31,17 @@ export default function App() {
 	return (
 		<>
 			{game.gameOver ? (
-				<Box height={HEIGHT} width={WIDTH}>
+				<Box
+					height={HEIGHT}
+					width={WIDTH}
+					display="flex"
+					alignItems="center"
+					justifyContent="center"
+				>
 					<Text>
-						Game Over! <Newline />
-						Press Enter to play again
+						Game Over! WPM: {stats.WPM} <Newline />
+						Press Enter to play again <Newline />
+						Ctrl + C to exit
 					</Text>
 				</Box>
 			) : (
