@@ -1,4 +1,4 @@
-<center><h1>Typeracer</h1></center>
+# Typeracer
 
 ## Simple typing game with stats built with INK in nodejs (react TUI)
 
