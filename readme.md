@@ -1,5 +1,9 @@
-<h1 style="text-align: center"><b>Typeracer</B></h1>
+<center><h1>Typeracer</h1></center>
 
-## Simple typeracer built with INK in nodejs (react TUI)
+## Simple typing game with stats built with INK in nodejs (react TUI)
 
-## To try it: `npx typeracer`
+### - To try it run: `npx typeracer`
+
+## Authors
+
+- [@fedev](https://github.com/fedevcoding)

@@ -1,3 +1,3 @@
 export type STATS = {
-	WPM: number;
+  WPM: number;
 };

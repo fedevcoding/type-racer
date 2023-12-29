@@ -1,10 +1,16 @@
 {
-	"extends": "@sindresorhus/tsconfig",
-	"compilerOptions": {
-		"outDir": "dist",
-		"noUnusedLocals": false
-	},
-	"include": [
-		"source"
-	]
+  "extends": "@sindresorhus/tsconfig",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "Node16",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "declaration": true,
+    "noUnusedLocals": false,
+    "experimentalDecorators": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true
+  }
 }
