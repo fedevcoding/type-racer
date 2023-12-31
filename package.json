@@ -5,11 +5,16 @@
   },
   "version": "0.0.3",
   "description": "Typeracer game in your terminal",
+  "author": "@fedevcoding",
   "license": "MIT",
   "bin": "dist/cli.js",
   "type": "module",
   "engines": {
     "node": ">=16"
+  },
+  "repository": {
+    "url": "https://github.com/fedevcoding/type-racer",
+    "type": "git"
   },
   "scripts": {
     "build": "tsup src/cli.tsx --format cjs,esm",
@@ -17,9 +22,6 @@
     "lint": "tsc && eslint . --ext .ts --ext .tsx",
     "pretty": "prettier --write ."
   },
-  "files": [
-    "dist"
-  ],
   "dependencies": {
     "@tanstack/react-query": "^5.13.4",
     "ink": "^4.1.0",
